@@ -177,7 +177,7 @@ if (!$Command) {
     exit
 }
 
-
+# Set default logging location
 $sourceDirectory = "$PSScriptRoot\logs\"
 
 function invoke-logfile {
@@ -264,10 +264,10 @@ $timeStamp
 function invoke-searchentry {
     param (
         [Parameter(Position = 0, Mandatory = $True)]
-        [string]$pattern   
+        [string]$pattern
     )
- 
-    Get-ChildItem -path $sourceDirectory | Select-String -pattern $pattern 
+
+    Get-ChildItem -path $sourceDirectory | Select-String -pattern $pattern
 }
 
 function invoke-editlog {
