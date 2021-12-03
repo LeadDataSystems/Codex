@@ -267,7 +267,7 @@ function invoke-searchentry {
         [string]$pattern
     )
 
-    Get-ChildItem -path $sourceDirectory | Select-String -pattern $pattern
+    Get-ChildItem -path $sourceDirectory | Sort-Object -Property {$_.LastWriteTime} -Descending | Select-String -pattern $pattern
 }
 
 function invoke-editlog {
