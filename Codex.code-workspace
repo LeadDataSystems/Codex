@@ -4,5 +4,10 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"cSpell.enableFiletypes": [
+			"markdown"
+		],
+		"cSpell.enabled": true
+	}
 }
