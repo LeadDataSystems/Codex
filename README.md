@@ -10,7 +10,7 @@
 
 ### Goal
 #### The overall goal of Codex is to provide a simple way to take and make use of your notes
-  - Powershell functions implemented as command line interface features make this possible.
+##### Powershell functions implemented as command line interface features make this possible.
   - codex help
   - codex log
   - codex edit 
