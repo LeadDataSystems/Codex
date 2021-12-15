@@ -26,16 +26,34 @@ LOGIC
     The first line logged will use Markdown header two format.
     Markdown syntax is supported for log entries.
     Entries are separated by a horizontal rule and a new line.
+
+    Caveat Emptor:
+    When creating a multiline log entry, use single quotes to surround the 
+    entry text, this means any single quote in the entry must be double quoted
+    to escape and continue the entry.
     
     i.e. 
-    2021-11-19T17:02:17.9448727-05:00
+        Input:
+        codex log 'This is a multiline log entry
+        >> - bullet 1
+        >> - bullet 2 with code snippet without variable expansion `some cool code and a variable $x`
+        >> - bullet 3 with a single quote, don''t forget to double up single quotes to continue the log entry
+        >> - [x] task 1, completed.
+        >> - [ ] task 2
+        >> - [ ] task 3'
 
-    ## This is a multiline log entry
-    - bullet 1
-    - bullet 2
-    - bullet 3
-    - [ ] task 1
-    - [ ] task 2
+        Output:        
+        2021-12-15T11:41:05.4787143-05:00
+
+        ## This is a multiline log entry
+        - bullet 1
+        - bullet 2 with code snippet without variable expansion `some cool code and a variable $x`
+        - bullet 3 with a single quote, don't forget to double up single quotes to continue the log entry
+        - [x] task 1, completed.
+        - [ ] task 2
+        - [ ] task 3
+
+        ---
 
 
     ---
@@ -57,13 +75,17 @@ SETUP
     using markdown syntax.
 
 EXAMPLES
-    
-    Create an alias for ease of use:
-        set-alias -name l -value .\Scribe.ps1
+
+    Create an alias for ease of use, if not using a profile.ps1
+    to handle the alias and location.
+    see the included profile.ps1 for example.
+
+    Creation of a nonpersistent alias:
+        set-alias -name codex -value .\Scribe.ps1
     
     Single Line Entry:    
         Input:
-        l log this is a single line entry
+        codex log this is a single line entry
 
         Output:
         2021-11-19T17:07:43.7853097-05:00
@@ -76,7 +98,7 @@ EXAMPLES
         Include a screenshot with normal markdown linking
         Input:
         In this case we use the sub directory for our image link.
-        l log '![Random Screenshot](./Captures/20211116.png)'
+        codex log '![Random Screenshot](./Captures/20211116.png)'
         
         Please note, to make capturing screenshots easier,
         make the default location for screenshots a sub directory
@@ -100,26 +122,27 @@ EXAMPLES
 
     Multiline Entry:
         Log entry uses a single or double quote to open and close the multiline entry.
-        
-        Input:
-        l log 'This is a multiline log entry 
-        >> - bullet 1
-        >> - bullet 2
-        >> - bullet 3
-        >> - [ ] task 1
-        >> - [ ] task 2
-        >> '
+        Remember, any single quote must be doubled to escape and preserve the log entry.
 
-        Output:
-        2021-11-19T17:02:17.9448727-05:00
+        Input:
+        codex log 'This is a multiline log entry
+        >> - bullet 1
+        >> - bullet 2 with code snippet without variable expansion `some cool code and a variable $x`
+        >> - bullet 3 with a single quote, don''t forget to double up single quotes to continue the log entry
+        >> - [x] task 1, completed.
+        >> - [ ] task 2
+        >> - [ ] task 3'
+
+        Output:        
+        2021-12-15T11:41:05.4787143-05:00
 
         ## This is a multiline log entry
         - bullet 1
-        - bullet 2
-        - bullet 3
-        - [ ] task 1
+        - bullet 2 with code snippet without variable expansion `some cool code and a variable $x`
+        - bullet 3 with a single quote, don't forget to double up single quotes to continue the log entry
+        - [x] task 1, completed.
         - [ ] task 2
-
+        - [ ] task 3
 
         ---
 
@@ -127,7 +150,7 @@ EXAMPLES
         Code snippet logging, same rules as above, and we add the markdown backtick for `code` content rendering.
 
         Input:
-        l log 'Powershell Rename All Markdown Files to YYYYMMDD-Name.md  
+        codex log 'Powershell Rename All Markdown Files to YYYYMMDD-Name.md  
         >> `gci *.md | %{$logdate = ($_.LastWriteTime).ToString("yyyyMMdd"); $newName = "$logdate-$($_.Name)"; $_ | Rename-Item -NewName  $newName }`'
 
         Output:
@@ -145,10 +168,6 @@ HELP
     .\scribe.ps1 -?
 
     Get-Help .\scribe.ps1
-
-
-
-
 
 .NOTES
     CREDITS
@@ -243,7 +262,7 @@ function invoke-appendEntry {
 
     #generate a utc timestamp with offset for timezone
     $timeStamp = ((get-date)).ToString("yyyy-MM-ddTHH:mm:ss.fffffffzzz")
-
+    
     #apply markdown template
     #make use of the double quoted here-string in powershell for the log entry.
     $appendEntry = 
