@@ -6,7 +6,8 @@
 	],
 	"settings": {
 		"cSpell.enableFiletypes": [
-			"markdown"
+			"markdown",
+			"powershell"
 		],
 		"cSpell.enabled": true
 	}
