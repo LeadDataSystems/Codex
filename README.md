@@ -19,6 +19,17 @@
   - codex test
  
  ### Setup and Configuration
+   - TBD
+
  ### Use Cases
-  - Log Entry
-  - TBD
+  - Realtime Log Entry:
+    - Similar to a lab notebook or engineering log.
+    - Screen shot links, useful for recording debugging session etc.
+  - Edit Log:
+    - Edit the last modified Markdown Log File in your text editor.
+    - I use VSCode for this work.
+  - Search Logs:
+    - Pattern search across your logs
+    - Find content you've created and make use of it.
+  - List Logs:
+    - List all logs by file name, sorted by last modified date descending.
